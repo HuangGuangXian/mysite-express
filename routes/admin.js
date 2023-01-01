@@ -1,12 +1,16 @@
 var express = require('express');
 var router = express.Router();
 const adminServ = require("../service/adminService");
+const { ValidationError } = require('../utils/errors');
 const { formatResponse, analysisToken } = require("../utils/tool");
 
 // 登录
 router.post('/login', async function(req, res, next) {
     // 首先应该有一个验证码的验证
-
+    if(req.body.captcha.toLowerCase() !== req.session.captcha.toLowerCase()) {
+        // 如果进入此 if， 说明是有问题的，用户输入的验证码不正确
+        throw new ValidationError("验证码错误");
+    }
     // 假设上面的验证码已经通过了
     const result = await adminServ.loginService(req.body);
     if(result.token) {
