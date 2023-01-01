@@ -27,4 +27,9 @@ router.get("/whoami", async function (req, res) {
     }));
 });
 
+// 更新管理员
+router.put("/", async function (req, res) {
+    res.send(await adminServ.updateAdminService(req.body));
+});
+
 module.exports = router;

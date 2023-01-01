@@ -1,5 +1,5 @@
 const { DataTypes } = require("sequelize");
-const sequelize = require("../dao/dbConnect");
+const sequelize = require("../dbConnect");
 
 // 定义数据模型
 module.exports = sequelize.define("admin", {

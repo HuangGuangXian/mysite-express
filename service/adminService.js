@@ -2,6 +2,8 @@
 const md5 = require("md5");
 const adminDao = require("../dao/adminDao");
 const jwt = require("jsonwebtoken");
+const { formatResponse } = require("../utils/tool");
+const { ValidationError } = require("../utils/errors");
 
 module.exports.loginService = async function (loginInfo) {
     loginInfo.loginPwd = md5(loginInfo.loginPwd);   // 进行加密
@@ -34,4 +36,34 @@ module.exports.loginService = async function (loginInfo) {
     return {
         data,
     };
+}
+
+// 更新管理员
+module.exports.updateAdminService = async function (accountInfo) {
+    // 1. 根据传入的账号信息查询对应的用户（注意使用旧密码）
+    const adminInfo = await adminDao.loginDao({
+        loginId: accountInfo.loginId,
+        loginPwd: md5(accountInfo.oldLoginPwd)
+    });
+
+    // 2. 分为两种情况，有用户信息和没有用户信息
+    if (adminInfo && adminInfo.dataValues) {
+        // 说明密码正确，开始修改
+        // 其实就是组装新的对象，然后进行更新即可
+        const newPassword = md5(accountInfo.loginPwd); // 密码加密
+        await adminDao.updateAdminDao({
+            name: accountInfo.name,
+            loginId: accountInfo.loginId,
+            loginPwd: newPassword
+        });
+        return formatResponse(undefined, undefined, {
+            "loginId": accountInfo.loginId,
+            "name": accountInfo.name,
+            "id": adminInfo.dataValues.id
+        });
+    } else {
+        // 密码输入不正常
+        // 抛出自定义错误
+        throw new ValidationError("旧密码不正确");
+    }
 }

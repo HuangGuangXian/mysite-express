@@ -1,7 +1,7 @@
 // 该文件负责对数据库进行一个初始化操作
 const sequelize = require("./dbConnect");   // 数据库连接实例
 
-const adminModel = require("../model/adminModel"); // 数据模型
+const adminModel = require("./model/adminModel"); // 数据模型
 
 const md5 = require("md5");
 
