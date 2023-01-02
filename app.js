@@ -24,6 +24,9 @@ require("./dao/db");
 // 引入路由
 var adminRouter = require('./routes/admin');
 var captchaRouter = require('./routes/captcha');
+var bannerRouter = require('./routes/banner');
+var uploadRouter = require('./routes/upload');
+var blogTypeRouter =  require("./routes/blogType");
 
 // 创建服务器实例
 var app = express();
@@ -52,12 +55,16 @@ app.use(expressjwt({
   path: [
           {"url": "/api/admin/login", methods: ["POST"]},
           {"url": "/res/captcha", methods: ["GET"]},
+          {"url": "/api/banner", methods: ["GET"]},
         ]
 }));
 
 // 使用路由中间件
 app.use('/api/admin', adminRouter);
 app.use('/res/captcha', captchaRouter);
+app.use('/api/banner', bannerRouter);
+app.use('/api/upload', uploadRouter);
+app.use('/api/blogType', blogTypeRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -66,6 +73,8 @@ app.use(function (req, res, next) {
 
 // error handler
 app.use(function (err, req, res, next) {
+  console.log(err.name);
+  console.log(err.message);
   if (err.name === "UnauthorizedError") {
     // 说明是 token 验证错误，抛出自定义错误
     res.send(new ForbiddenError("未登录或登录已经过期").toResponseJSON());
