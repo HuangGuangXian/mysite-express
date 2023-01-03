@@ -27,6 +27,7 @@ var captchaRouter = require('./routes/captcha');
 var bannerRouter = require('./routes/banner');
 var uploadRouter = require('./routes/upload');
 var blogTypeRouter =  require("./routes/blogType");
+var blogRouter =  require("./routes/blog");
 
 // 创建服务器实例
 var app = express();
@@ -56,6 +57,7 @@ app.use(expressjwt({
           {"url": "/api/admin/login", methods: ["POST"]},
           {"url": "/res/captcha", methods: ["GET"]},
           {"url": "/api/banner", methods: ["GET"]},
+          {"url": "/api/blog", methods: ["GET"]},
         ]
 }));
 
@@ -65,6 +67,7 @@ app.use('/res/captcha', captchaRouter);
 app.use('/api/banner', bannerRouter);
 app.use('/api/upload', uploadRouter);
 app.use('/api/blogType', blogTypeRouter);
+app.use('/api/blog', blogRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
