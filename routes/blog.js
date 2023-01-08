@@ -14,14 +14,18 @@ router.get("/", async (req, res) => {
 
 // 获取其中一个博客
 router.get("/:id", async (req, res) => {
+    const reqHeaders = req.headers;
+    res.send(await blogServ.findBlogByIdService(req.params.id, reqHeaders.authorization));
 });
 
 // 修改其中一个博客
 router.put("/:id", async (req, res) => {
+    res.send(await blogServ.updateBlogService(req.params.id, req.body));
 });
 
 // 删除其中一个博客
 router.delete("/:id", async (req, res) => {
+    res.send(await blogServ.deleteBlogService(req.params.id));
 });
 
 module.exports = router;
