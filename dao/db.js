@@ -6,6 +6,7 @@ const bannerModel = require("./model/bannerModel");
 const blogTypeModel = require("./model/blogTypeModel");
 const blogModel = require("./model/blogModel");
 const projectModel = require("./model/projectModel");
+const messageModel = require("./model/messageModel");
 
 const md5 = require("md5");
 
@@ -20,7 +21,18 @@ const md5 = require("md5");
     foreignKey: "categoryId",
     targetKey: "id",
     as: "category"
-  })
+  });
+
+  // 博客与评论之间存在关联关系
+  blogModel.hasMany(messageModel, {
+    foreignKey: "blogId",
+    targetKey: "id"
+  });
+  messageModel.belongsTo(blogModel, {
+    foreignKey: "blogId",
+    targetKey: "id",
+    as: "blog"
+  });
 
   // 将数据模型和表进行同步
   await sequelize.sync({
