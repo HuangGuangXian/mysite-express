@@ -5,6 +5,7 @@ const adminModel = require("./model/adminModel"); // 数据模型
 const bannerModel = require("./model/bannerModel");
 const blogTypeModel = require("./model/blogTypeModel");
 const blogModel = require("./model/blogModel");
+const projectModel = require("./model/projectModel");
 
 const md5 = require("md5");
 
