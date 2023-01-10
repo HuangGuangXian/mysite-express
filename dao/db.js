@@ -7,6 +7,8 @@ const blogTypeModel = require("./model/blogTypeModel");
 const blogModel = require("./model/blogModel");
 const projectModel = require("./model/projectModel");
 const messageModel = require("./model/messageModel");
+const settingModel = require("./model/settingModel");
+const aboutModel = require("./model/aboutModel");
 
 const md5 = require("md5");
 
@@ -75,6 +77,36 @@ const md5 = require("md5");
       }
     ]);
     console.log("初始化首页标语数据...");
+  }
+
+  // 初始化关于我
+  const aboutCount = await aboutModel.count();
+  if(!aboutCount) {
+    await aboutModel.create({
+      url: "https://oss.duyiedu.com/demo-summary/网页简历/index.html"
+    });
+    console.log("初始化关于我数据...");
+  }
+
+  // 初始化全局设置
+  const settingCount = await settingModel.count();
+  if (!settingCount) {
+    await settingModel.create({
+        avatar: '/static/images/avatar.jpeg',
+        siteTitle: '我的个人空间',
+        github: '',
+        qq: '3263023350',
+        qqQrCode:
+            '/static/images/zuotian9652.jpg',
+        weixin: 'yh777bao',
+        weixinQrCode:
+            '/static/images/zuotian9652.jpg',
+        mail: 'duyi@gmail.com',
+        icp: '黑ICP备17001719号',
+        githubName: 'DuYi-Edu',
+        favicon: 'http://mdrs.yuanjin.tech/Fs4CDlC6mwe_WXLMIiXcmSJLHO4f',
+    });
+    console.log("初始化全局设置数据...");
   }
   console.log("数据库数据已经准备完毕...");
 })();
