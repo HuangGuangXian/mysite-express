@@ -10,7 +10,8 @@ module.exports.addBlogTypeDao = async function (newBlogTypeInfo) {
 
 // 获取所有的博客分类
 module.exports.findAllBlogTypeDao = async function () {
-    return await blogTypeModel.findAll();
+    // return await blogTypeModel.findAll();
+    return await blogTypeModel.findAndCountAll();
 }
 
 // 获取其中一个博客分类

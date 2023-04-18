@@ -32,6 +32,7 @@ var projectRouter =  require("./routes/project");
 var messageRouter =  require("./routes/message");
 var settingRouter =  require("./routes/setting");
 var aboutRouter =  require("./routes/about");
+var totalRouter =  require("./routes/total");
 
 // 创建服务器实例
 var app = express();
@@ -69,6 +70,8 @@ app.use(expressjwt({
           {"url": "/api/comment", methods: ["GET", "POST"]},
           {"url": "/api/setting", methods: ["GET"]},
           {"url": "/api/about", methods: ["GET"]},
+          {"url": "/api/total", methods: ["GET"]},
+          {"url": "/api/blog/RecentlyReleased", methods: ["GET"]},
         ]
 }));
 
@@ -84,6 +87,7 @@ app.use('/api/message', messageRouter);
 app.use('/api/comment', messageRouter);
 app.use('/api/setting', settingRouter);
 app.use('/api/about', aboutRouter);
+app.use('/api/total', totalRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

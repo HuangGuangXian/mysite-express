@@ -12,6 +12,11 @@ router.get("/", async (req, res) => {
     res.send(await blogServ.findBlogByPageService(req.query));
 });
 
+// 获取最近发布的博客
+router.get("/recentlyReleased", async (req, res) => {
+    res.send(await blogServ.getRecentlyReleased());
+});
+
 // 获取其中一个博客
 router.get("/:id", async (req, res) => {
     const reqHeaders = req.headers;

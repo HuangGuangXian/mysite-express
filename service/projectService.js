@@ -4,8 +4,8 @@ const { formatResponse, handleDataPattern } = require("../utils/tool");
 const { ValidationError } = require("../utils/errors");
 
 module.exports.findAllProjectService = async function () {
-    const data = await projectDao.findAllProjectDao();
-    const obj = handleDataPattern(data);
+    const { rows } = await projectDao.findAllProjectDao();
+    const obj = handleDataPattern(rows);
     // 将项目描述还原成数组
     obj.forEach(item => {
         item.description = JSON.parse(item.description);

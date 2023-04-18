@@ -79,3 +79,12 @@ module.exports.findOneMessageDao = async function (id) {
     const { dataValues } = await messageModel.findByPk(id);
     return dataValues;
 }
+
+module.exports.findMessageTotal = async function () {
+    const { count } = await messageModel.findAndCountAll({
+        where: {
+            blogId: null
+        }
+    });
+    return count;
+}

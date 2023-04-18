@@ -43,8 +43,8 @@ module.exports.addBlogTypeService = async (newBlogTypeInfo) => {
 
 // 查询所有博客分类
 module.exports.findAllBlogTypeService = async () => {
-    const data = await blogTypeDao.findAllBlogTypeDao();
-    const obj = formatResponse(undefined, undefined, handleDataPattern(data));
+    const { rows } = await blogTypeDao.findAllBlogTypeDao();
+    const obj = formatResponse(undefined, undefined, handleDataPattern(rows));
     obj.data.sort((a, b) => a.order - b.order);
     return obj;
 };

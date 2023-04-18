@@ -78,3 +78,25 @@ module.exports.blogCountByBlogType = async function (categoryId) {
         }
     });
 }
+
+// 获取博客总数
+module.exports.findBlogTotal = async function () {
+    const { count } = await blogModel.findAndCountAll();
+    return count;
+}
+
+module.exports.getRecentlyReleased = async function () {
+    return await blogModel.findAll({
+        limit: 5,
+        attributes: ["title", "description", "scanNumber", "commentNumber", "createDate", "categoryId"],
+        include: [
+            {
+                model: blogTypeModel,
+                as: "category",
+            }
+        ],
+        order: [
+            ["createDate", "DESC"]
+        ]
+    });
+}

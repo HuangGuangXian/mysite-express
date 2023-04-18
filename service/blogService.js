@@ -140,8 +140,10 @@ module.exports.updateBlogService = async function (id, blogInfo) {
     if(blogInfo.categoryId !== oldBlogInfo.categoryId) {
         // 如果进入此 if，说明修改了此文章的分类信息，那么修改前后的文章分类对应的文章数量都需要做出修改
         const oldBlogType = await blogTypeDao.findOneBlogTypeDao(oldBlogInfo.categoryId);
-        oldBlogType.articleCount --;
-        await oldBlogType.save();
+        if(oldBlogType) {
+            oldBlogType.articleCount --;
+            await oldBlogType.save();
+        }
 
         const newBlogType = await blogTypeDao.findOneBlogTypeDao(blogInfo.categoryId);
         newBlogType.articleCount ++;
@@ -166,4 +168,9 @@ module.exports.deleteBlogService = async function (id) {
     // 删除文章
     await blogDao.deleteBlogDao(id);
     return formatResponse(undefined, undefined, true);
+}
+
+module.exports.getRecentlyReleased = async function () {
+    const data = await blogDao.getRecentlyReleased();
+    return formatResponse(undefined, undefined, data);
 }

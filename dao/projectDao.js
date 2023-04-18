@@ -2,7 +2,8 @@ const projectModel = require("./model/projectModel");
 
 // 查询所有项目
 module.exports.findAllProjectDao = async function () {
-    return await projectModel.findAll();
+    const data = await projectModel.findAndCountAll();
+    return data;
 }
 
 // 新增项目
